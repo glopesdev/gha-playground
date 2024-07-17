@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 env:
   CiRunNumber: ${{ github.run_number }}
-  CiRunName: ci${{ github.run_number }}  
+  CiRunName: ${{ github.event_name }}-ci${{ github.run_number }}  
 jobs:
   build:
     runs-on: ubuntu-latest
