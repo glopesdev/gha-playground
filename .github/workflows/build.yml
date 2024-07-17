@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
 env:
   CiRunNumber: ${{ github.run_number }}
-  CiRunName: ci${{ github.run_number }}
-  CiBuildVersionSuffix: ${{ github.ref != 'refs/heads/main' && env.CiRunName || '' }}  
+  CiRunName: ci${{ github.run_number }}  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +17,6 @@ jobs:
         uses: actions/checkout@v4
         
       - name: CiBuild
-        if: github.ref != 'refs/heads/main'
         env:
-          CiBuildVersionSuffix:  ci${{ github.run_number }}
-        run: echo "$(CiBuildVersionSuffix)"        
+          CiBuildVersionSuffix: ${{ github.ref != 'refs/heads/main' && env.CiRunName || '' }}
+        run: echo ${{ env.CiBuildVersionSuffix }}   
