@@ -1,0 +1,24 @@
+name: Build
+ 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+env:
+  CiRunNumber: ${{ github.run_number }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: CiBuild
+        if: github.ref != 'refs/heads/main'
+        env:
+          CiBuildVersionSuffix: ci${{ github.run_number }}
+
+      - name: Echo suffix
+        run: echo "$(CiBuildVersionSuffix)"
