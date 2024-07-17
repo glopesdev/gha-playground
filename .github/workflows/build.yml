@@ -8,6 +8,8 @@ on:
   workflow_dispatch:
 env:
   CiRunNumber: ${{ github.run_number }}
+  CiRunName: ci${{ github.run_number }}
+  CiBuildVersionSuffix: ${{ github.ref != 'refs/heads/main' && env.CiRunName || '' }}  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,5 +20,5 @@ jobs:
       - name: CiBuild
         if: github.ref != 'refs/heads/main'
         env:
-          CiBuildVersionSuffix: ci${{ github.run_number }}
+          CiBuildVersionSuffix:  ci${{ github.run_number }}
         run: echo "$(CiBuildVersionSuffix)"        
